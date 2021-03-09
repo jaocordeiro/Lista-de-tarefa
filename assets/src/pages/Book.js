@@ -1,39 +1,79 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 
-const Book = () => {
+const Book = ({navigation}) => {
+  const [title, setTitle] = useState();
+  const [description, setDescription] = useState();
+  const [photo, setPhoto] = useState();
+
+  const isValid = () => {
+    if((title !== undefined) && (title !== '')) {  // sinal de !== sigenifica: Diferente de Algo - Sinal de && significa: e mais algo
+      return true;
+    }
+
+    return false;
+  }
+
+  const onSave = () => {
+
+    console.log (`Title ${title}`); //Lembrar que o correto é as `` e não '' 
+    console.log (`Description ${description}`);
+
+      if(isValid()) {
+        console.log ("Válido");
+      } else {
+        console.log ("Inválido");
+      }
+  }
+
   return (
     <View style = {styles.container}>
 
-      <Text style = {styles.pageTitle}> Inserir uma nova tarefa </Text>
+      <Text style = {styles.pageTitle}> Insira uma nova tarefa </Text>
 
       <TextInput 
         style = {styles.input}
-        placeholder = "Título"      
+        placeholder = "Título"  
+        value = {title}
+        onChangeText = {(text) => {
+          setTitle(text)
+        }}    
       />
       <TextInput 
         style = {styles.input}
         placeholder = "Descrição"
-        multiline= {true} //Campo ira acetar mais de 1 linha
-        numberOfLines= {4} //Número de linhas que o campo vai aceitar
+        multiline = {true} //Campo ira acetar mais de 1 linha
+        numberOfLines = {4} //Número de linhas que o campo vai aceitar
+        value = {description}
+        onChangeText = {(text) => {
+          setDescription(text)
+        }}
       />
 
       <TouchableOpacity style = {styles.cameraBotton}>
         <Icon name= "photo-camera" size = {30} color= "#fff" />
       </TouchableOpacity>
 
-      <TouchableOpacity style = {styles.saveBotton}>
+      <TouchableOpacity 
+        style = {[styles.saveBotton, (!isValid()) ? 
+        styles.saveBottonInvalid : '']}
+          onPress = {onSave}>
         <Text style = {styles.saveBottonText}>
           Cadastar
         </Text>
       </TouchableOpacity>  
 
       <TouchableOpacity style = {styles.cancelBotton}>
-        <Text style = {styles.cancelBottonText}>
-          Cancelar
+        <Text 
+          style = {styles.cancelBottonText}
+            onPress = {() => {
+              navigation.goBack ();
+            }}
+          >
+            Cancelar
         </Text>
       </TouchableOpacity>
 
@@ -76,6 +116,9 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
     marginBottom: 25,
   },
+  saveBottonInvalid: {
+    opacity: 0.5,
+  },  
   saveBottonText: {
     color: "#fff",
     fontSize: 20,
