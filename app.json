@@ -1,7 +1,12 @@
 {
   "expo": {
     "name": "lista-de-tarefas",
-    "slug": "snack-597e2d92-0178-4148-abb9-f07c561afe9f",
+    "slug": "snack-9d6f67b7-c2ff-4c77-8a31-85accf15b45c",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,15 +23,6 @@
     ],
     "ios": {
       "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
-      }
-    },
-    "web": {
-      "favicon": "./assets/favicon.png"
     }
   }
 }

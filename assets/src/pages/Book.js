@@ -1,15 +1,25 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, TouchableOpacity,
+AsyncStorage, StyleSheet } from 'react-native';
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 
-
 const Book = ({navigation}) => {
+  const [books, setBooks] = useState([]);
   const [title, setTitle] = useState();
   const [description, setDescription] = useState();
   const [photo, setPhoto] = useState();
 
-  const isValid = () => {
+  useEffect(() => {
+
+  AsyncStorage.getItem("books").then(data => {
+      const book = JSON.parse(data);
+      setBooks(book);
+    })
+
+  }, []);
+
+  const isValid = () => { 
     if((title !== undefined) && (title !== '')) {  // sinal de !== sigenifica: Diferente de Algo - Sinal de && significa: e mais algo
       return true;
     }
@@ -17,13 +27,27 @@ const Book = ({navigation}) => {
     return false;
   }
 
-  const onSave = () => {
+  const onSave = async () => {
 
     console.log (`Title ${title}`); //Lembrar que o correto é as `` e não '' 
     console.log (`Description ${description}`);
 
       if(isValid()) {
         console.log ("Válido");
+
+          const id = Math.random(1000000).toString();
+          const data = {
+            id,
+            title,
+            description,
+            photo,
+          };
+
+          books.push(data);
+
+        console.log(JSON.stringify(data));
+        await AsyncStorage.setItem('books', JSON.stringify(books));
+          navigation.goBack();
       } else {
         console.log ("Inválido");
       }

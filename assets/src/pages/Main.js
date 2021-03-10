@@ -1,47 +1,23 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
+import {AsyncStorage} from "react-native";
 import { View, Text, TouchableOpacity, FlatList, StyleSheet } from "react-native"
 
 import Icon from "react-native-vector-icons/MaterialIcons";
 
 
 const Main = ({navigation}) => {
-  const data =[
-    {
-      id: "1",
-      title: "Estudar JavaScript",
-      anotations: "Do intermediário ao avançado",
-      read: false,
-      photo: null,
-    },
-    {
-      id: "2",
-      title: "Estudar React-Native",
-      anotations: "Do intermediário ao avançado",
-      read: false,
-      photo: null,
-    },
-    {
-      id: "3",
-      title: "Estudar NodeJs",
-      anotations: "Do básico ao intermediário",
-      read: false,
-      photo: null,
-    },
-    {
-      id: "4",
-      title: "Estudar css",
-      anotations: "Do intermediário ao avançado",
-      read: false,
-      photo: null,
-    },
-    {
-      id: "5",
-      title: "Lavar a louça",
-      anotations: "Antes que a muie brigue",
-      read: false,
-      photo: null,
-    }
-  ]
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => { // O useEffect é executado no momento em que o componente é exibido na tela
+    // código da execução
+
+  AsyncStorage.getItem("books").then(data => {
+      const book = JSON.parse(data);
+      setBooks(book);
+    })
+
+  }, []);
+
 
   return (
 
@@ -61,7 +37,7 @@ const Main = ({navigation}) => {
       </View>
 
       <FlatList 
-        data={data}
+        data={books}
         keyExtractor={item => item.id} 
         renderItem={({ item }) => (
           <TouchableOpacity style = {styles.itemButton}>
