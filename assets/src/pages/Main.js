@@ -18,6 +18,31 @@ const Main = ({navigation}) => {
 
   }, []);
 
+  const onNewBook = () => {
+    navigation.navigate('Book');
+  }
+
+  const onBookEdit = (bookId) => {
+    const book = books.find(item => item.id === bookId)
+    navigation.navigate('Book', {book: book, isEdit: true});
+  };
+
+  const onBookDelete = async (bookId) => {
+    const newBooks = books.filter(item => item.id !== bookId);
+    await AsyncStorage.setItem("books", JSON.stringify(newBooks));
+    setBooks(newBooks);
+  }
+
+  const onBookRead = async (bookId) => {
+    const newBooks = books.map(item => {
+      if (item.id === bookId) {
+        item.read = !item.read;
+      }
+      return item;
+    })
+    await AsyncStorage.setItem("books", JSON.stringify(newBooks));
+    setBooks(newBooks);
+  }
 
   return (
 
@@ -28,10 +53,7 @@ const Main = ({navigation}) => {
 
         <TouchableOpacity 
           style = {styles.add}
-          onPress = {() => {
-            navigation.navigate ("Book");
-          }}
-          >
+          onPress = {onNewBook}>
             <Icon name= "library-add" size = {25} color= "#298ae5" />
         </TouchableOpacity>
       </View>
@@ -40,9 +62,26 @@ const Main = ({navigation}) => {
         data={books}
         keyExtractor={item => item.id} 
         renderItem={({ item }) => (
-          <TouchableOpacity style = {styles.itemButton}>
-            <Text style = {styles.itemText}>{item.title}</Text>
-          </TouchableOpacity>
+          <View style={styles.itemsContainer}>
+            <TouchableOpacity 
+              style = {styles.itemButton}
+              onPress={() => onBookRead(item.id)}>
+              <Text style = {[styles.itemText, item.read ? 
+              styles.itemRead : '']}>{item.title}</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style = {styles.editButton}
+              onPress={() => onBookEdit(item.id)}>
+              <Icon name= "create" size = {25} color= "#5cdeed" />
+            </TouchableOpacity>
+
+            <TouchableOpacity 
+              style = {styles.deleteButton}
+              onPress={() => onBookDelete(item.id)}>
+              <Icon name= "delete" size = {25} color= "#f72c2c" />
+            </TouchableOpacity>
+          </View>
         )}     
       />
     </View>
@@ -68,12 +107,21 @@ const styles = StyleSheet.create ({
     //height: 50,
     //width: 50,
   },
+  itemsContainer: {
+    flexDirection: "row",
+  },
   itemButton: {
-
+    flex: 1,
   },
   itemText: {
     fontSize: 17,
-  }
+  },
+  itemRead: {
+    textDecorationLine: "line-through",
+    color: "#95a5a6",
+  },
+  editButton: {},
+  deleteButton: {},
 });
 
 export default Main;
