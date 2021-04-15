@@ -92,15 +92,16 @@ const styles = StyleSheet.create ({
   container: {
     flex: 1,
     padding: 7, //Engloba toda a view da aplicação
+    backgroundColor: "#323843"
   },
   ferramentas: {
     flexDirection: "row",
-    marginBottom: 15,
+    marginBottom: 25,
   },
   title: {
     flex:  1,
-    fontSize: 25,
-    color: "#298ae5"
+    fontSize: 27,
+    color: "#35a8ea"
   },
   add: {
     justifyContent: "center",
@@ -108,13 +109,17 @@ const styles = StyleSheet.create ({
     //width: 50,
   },
   itemsContainer: {
+    marginTop: 7,
     flexDirection: "row",
+    borderBottomWidth: 2,
+    borderBottomColor: "#969696"
   },
   itemButton: {
     flex: 1,
   },
   itemText: {
-    fontSize: 17,
+    fontSize: 20,
+    color: "#ffffff",
   },
   itemRead: {
     textDecorationLine: "line-through",

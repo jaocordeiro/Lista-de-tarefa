@@ -85,7 +85,7 @@ const Book = ({navigation}) => {
 
       <TextInput 
         style = {styles.input}
-        placeholder = "Título"  
+        placeholder = "Título" 
         value = {title}
         onChangeText = {(text) => {
           setTitle(text)
@@ -102,16 +102,12 @@ const Book = ({navigation}) => {
         }}
       />
 
-      <TouchableOpacity style = {styles.cameraBotton}>
-        <Icon name= "photo-camera" size = {30} color= "#fff" />
-      </TouchableOpacity>
-
       <TouchableOpacity 
-        style = {[styles.saveBotton, (!isValid()) ? 
-        styles.saveBottonInvalid : '']}
+        style = {[styles.saveButton, (!isValid()) ? 
+        styles.saveButtonInvalid : '']}
           onPress = {onSave}>
-        <Text style = {styles.saveBottonText}>
-          {isEdit ? "Atualziar" : "Cadastar"}
+        <Text style = {styles.saveButtonText}>
+          {isEdit ? "Atualizar" : "Cadastar"}
         </Text>
       </TouchableOpacity>  
 
@@ -134,19 +130,22 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
+    backgroundColor: "#323843"
   },
   pageTitle: {
     textAlign: "center",
-    fontSize: 18,
+    fontSize: 25,
     marginBottom: 40,
+    color: "#ffffff",
   },
   input: {
     fontSize: 18,
-    borderBottomColor: "#f39c12",
+    borderBottomColor: "#d3d3d3",
     borderBottomWidth: 2,
     marginBottom: 35,
+    color: "#ffffff",
   },
-  cameraBotton: {
+  /* cameraBotton: {
     backgroundColor: "#3498db",
     borderRadius: 50,
     width: 45,
@@ -156,19 +155,21 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     marginBottom: 40,
     marginTop: 10,
-  },
-  saveBotton: {
-    backgroundColor: "#3498db",
+  }, */
+  saveButton: {
     alignSelf: "center",
-    borderRadius: 12,
+    backgroundColor: "#215aed",
     paddingHorizontal: 30,
     paddingVertical: 15,
+    borderRadius: 12,
     marginBottom: 25,
+    fontSize: 17,
   },
-  saveBottonInvalid: {
+  saveButtonInvalid: {
+    backgroundColor: "#2183ed",
     opacity: 0.5,
   },  
-  saveBottonText: {
+  saveButtonText: {
     color: "#fff",
     fontSize: 20,
     fontWeight: "bold"
